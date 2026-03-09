@@ -6,15 +6,15 @@ Capture detailed execution traces for debugging and analysis. Traces include DOM
 
 ```bash
 # Start trace recording
-npx playwright-cli tracing-start
+npx @playwright/cli tracing-start
 
 # Perform actions
-npx playwright-cli open https://example.com
-npx playwright-cli click e1
-npx playwright-cli fill e2 "test"
+npx @playwright/cli open https://example.com
+npx @playwright/cli click e1
+npx @playwright/cli fill e2 "test"
 
 # Stop trace recording
-npx playwright-cli tracing-stop
+npx @playwright/cli tracing-stop
 ```
 
 ## Trace Output Files
@@ -64,22 +64,22 @@ When you start tracing, Playwright creates a `traces/` directory with several fi
 ### Debugging Failed Actions
 
 ```bash
-npx playwright-cli tracing-start
-npx playwright-cli open https://app.example.com
+npx @playwright/cli tracing-start
+npx @playwright/cli open https://app.example.com
 
 # This click fails - why?
-npx playwright-cli click e5
+npx @playwright/cli click e5
 
-npx playwright-cli tracing-stop
+npx @playwright/cli tracing-stop
 # Open trace to see DOM state when click was attempted
 ```
 
 ### Analyzing Performance
 
 ```bash
-npx playwright-cli tracing-start
-npx playwright-cli open https://slow-site.com
-npx playwright-cli tracing-stop
+npx @playwright/cli tracing-start
+npx @playwright/cli open https://slow-site.com
+npx @playwright/cli tracing-stop
 
 # View network waterfall to identify slow resources
 ```
@@ -88,15 +88,15 @@ npx playwright-cli tracing-stop
 
 ```bash
 # Record a complete user flow for documentation
-npx playwright-cli tracing-start
+npx @playwright/cli tracing-start
 
-npx playwright-cli open https://app.example.com/checkout
-npx playwright-cli fill e1 "4111111111111111"
-npx playwright-cli fill e2 "12/25"
-npx playwright-cli fill e3 "123"
-npx playwright-cli click e4
+npx @playwright/cli open https://app.example.com/checkout
+npx @playwright/cli fill e1 "4111111111111111"
+npx @playwright/cli fill e2 "12/25"
+npx @playwright/cli fill e3 "123"
+npx @playwright/cli click e4
 
-npx playwright-cli tracing-stop
+npx @playwright/cli tracing-stop
 # Trace shows exact sequence of events
 ```
 
@@ -117,10 +117,10 @@ npx playwright-cli tracing-stop
 
 ```bash
 # Trace the entire flow, not just the failing step
-npx playwright-cli tracing-start
-npx playwright-cli open https://example.com
+npx @playwright/cli tracing-start
+npx @playwright/cli open https://example.com
 # ... all steps leading to the issue ...
-npx playwright-cli tracing-stop
+npx @playwright/cli tracing-stop
 ```
 
 ### 2. Clean Up Old Traces
@@ -129,7 +129,7 @@ Traces can consume significant disk space:
 
 ```bash
 # Remove traces older than 7 days
-find .npx playwright-cli/traces -mtime +7 -delete
+find .playwright-cli/traces -mtime +7 -delete
 ```
 
 ## Limitations

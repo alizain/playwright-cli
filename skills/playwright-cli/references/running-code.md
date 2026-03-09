@@ -5,7 +5,7 @@ Use `run-code` to execute arbitrary Playwright code for advanced scenarios not c
 ## Syntax
 
 ```bash
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   // Your Playwright code here
   // Access page.context() for browser context operations
 }"
@@ -15,19 +15,19 @@ npx playwright-cli run-code "async page => {
 
 ```bash
 # Grant geolocation permission and set location
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   await page.context().grantPermissions(['geolocation']);
   await page.context().setGeolocation({ latitude: 37.7749, longitude: -122.4194 });
 }"
 
 # Set location to London
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   await page.context().grantPermissions(['geolocation']);
   await page.context().setGeolocation({ latitude: 51.5074, longitude: -0.1278 });
 }"
 
 # Clear geolocation override
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   await page.context().clearPermissions();
 }"
 ```
@@ -36,7 +36,7 @@ npx playwright-cli run-code "async page => {
 
 ```bash
 # Grant multiple permissions
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   await page.context().grantPermissions([
     'geolocation',
     'notifications',
@@ -46,7 +46,7 @@ npx playwright-cli run-code "async page => {
 }"
 
 # Grant permissions for specific origin
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   await page.context().grantPermissions(['clipboard-read'], {
     origin: 'https://example.com'
   });
@@ -57,22 +57,22 @@ npx playwright-cli run-code "async page => {
 
 ```bash
 # Emulate dark color scheme
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   await page.emulateMedia({ colorScheme: 'dark' });
 }"
 
 # Emulate light color scheme
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   await page.emulateMedia({ colorScheme: 'light' });
 }"
 
 # Emulate reduced motion
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
 }"
 
 # Emulate print media
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   await page.emulateMedia({ media: 'print' });
 }"
 ```
@@ -81,22 +81,22 @@ npx playwright-cli run-code "async page => {
 
 ```bash
 # Wait for network idle
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   await page.waitForLoadState('networkidle');
 }"
 
 # Wait for specific element
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   await page.waitForSelector('.loading', { state: 'hidden' });
 }"
 
 # Wait for function to return true
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   await page.waitForFunction(() => window.appReady === true);
 }"
 
 # Wait with timeout
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   await page.waitForSelector('.result', { timeout: 10000 });
 }"
 ```
@@ -105,13 +105,13 @@ npx playwright-cli run-code "async page => {
 
 ```bash
 # Work with iframe
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   const frame = page.locator('iframe#my-iframe').contentFrame();
   await frame.locator('button').click();
 }"
 
 # Get all frames
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   const frames = page.frames();
   return frames.map(f => f.url());
 }"
@@ -121,7 +121,7 @@ npx playwright-cli run-code "async page => {
 
 ```bash
 # Handle file download
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   const [download] = await Promise.all([
     page.waitForEvent('download'),
     page.click('a.download-link')
@@ -135,13 +135,13 @@ npx playwright-cli run-code "async page => {
 
 ```bash
 # Read clipboard (requires permission)
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   await page.context().grantPermissions(['clipboard-read']);
   return await page.evaluate(() => navigator.clipboard.readText());
 }"
 
 # Write to clipboard
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   await page.evaluate(text => navigator.clipboard.writeText(text), 'Hello clipboard!');
 }"
 ```
@@ -150,22 +150,22 @@ npx playwright-cli run-code "async page => {
 
 ```bash
 # Get page title
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   return await page.title();
 }"
 
 # Get current URL
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   return page.url();
 }"
 
 # Get page content
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   return await page.content();
 }"
 
 # Get viewport size
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   return page.viewportSize();
 }"
 ```
@@ -174,7 +174,7 @@ npx playwright-cli run-code "async page => {
 
 ```bash
 # Execute JavaScript and return result
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   return await page.evaluate(() => {
     return {
       userAgent: navigator.userAgent,
@@ -185,7 +185,7 @@ npx playwright-cli run-code "async page => {
 }"
 
 # Pass arguments to evaluate
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   const multiplier = 5;
   return await page.evaluate(m => document.querySelectorAll('li').length * m, multiplier);
 }"
@@ -195,7 +195,7 @@ npx playwright-cli run-code "async page => {
 
 ```bash
 # Try-catch in run-code
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   try {
     await page.click('.maybe-missing', { timeout: 1000 });
     return 'clicked';
@@ -209,7 +209,7 @@ npx playwright-cli run-code "async page => {
 
 ```bash
 # Login and save state
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   await page.goto('https://example.com/login');
   await page.fill('input[name=email]', 'user@example.com');
   await page.fill('input[name=password]', 'secret');
@@ -220,7 +220,7 @@ npx playwright-cli run-code "async page => {
 }"
 
 # Scrape data from multiple pages
-npx playwright-cli run-code "async page => {
+npx @playwright/cli run-code "async page => {
   const results = [];
   for (let i = 1; i <= 3; i++) {
     await page.goto(\`https://example.com/page/\${i}\`);
