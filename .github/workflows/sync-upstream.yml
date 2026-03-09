@@ -1,0 +1,32 @@
+name: Sync upstream and apply npx transform
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch and merge upstream
+        run: |
+          git remote add upstream https://github.com/microsoft/playwright-cli.git 2>/dev/null || true
+          git fetch upstream
+          git merge upstream/main --no-edit -X theirs || true
+          # Always take upstream's skill files as clean base for transform
+          git checkout upstream/main -- skills/playwright-cli/
+
+      - name: Run npx transform
+        run: ./scripts/npx-transform.sh
+
+      - uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: "sync: update from upstream and apply npx transform"
