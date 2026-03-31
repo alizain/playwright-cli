@@ -35,7 +35,8 @@ npx @playwright/cli goto https://playwright.dev
 npx @playwright/cli type "search query"
 npx @playwright/cli click e3
 npx @playwright/cli dblclick e7
-npx @playwright/cli fill e5 "user@example.com"
+# --submit presses Enter after filling the element
+npx @playwright/cli fill e5 "user@example.com"  --submit
 npx @playwright/cli drag e2 e8
 npx @playwright/cli hover e4
 npx @playwright/cli select e9 "option-value"
@@ -43,9 +44,11 @@ npx @playwright/cli upload ./document.pdf
 npx @playwright/cli check e12
 npx @playwright/cli uncheck e12
 npx @playwright/cli snapshot
-npx @playwright/cli snapshot --filename=after-click.yaml
 npx @playwright/cli eval "document.title"
 npx @playwright/cli eval "el => el.textContent" e5
+# get element id, class, or any attribute not visible in the snapshot
+npx @playwright/cli eval "el => el.id" e5
+npx @playwright/cli eval "el => el.getAttribute('data-testid')" e5
 npx @playwright/cli dialog-accept
 npx @playwright/cli dialog-accept "confirmation text"
 npx @playwright/cli dialog-dismiss
@@ -149,10 +152,12 @@ npx @playwright/cli console
 npx @playwright/cli console warning
 npx @playwright/cli network
 npx @playwright/cli run-code "async page => await page.context().grantPermissions(['geolocation'])"
+npx @playwright/cli run-code --filename=script.js
 npx @playwright/cli tracing-start
 npx @playwright/cli tracing-stop
-npx @playwright/cli video-start
-npx @playwright/cli video-stop video.webm
+npx @playwright/cli video-start video.webm
+npx @playwright/cli video-chapter "Chapter Title" --description="Details" --duration=2000
+npx @playwright/cli video-stop
 ```
 
 ## Open parameters
@@ -192,9 +197,22 @@ After each command, npx @playwright/cli provides a snapshot of the current brows
 [Snapshot](.playwright-cli/page-2026-02-14T19-22-42-679Z.yml)
 ```
 
-You can also take a snapshot on demand using `npx @playwright/cli snapshot` command.
+You can also take a snapshot on demand using `npx @playwright/cli snapshot` command. All the options below can be combined as needed.
 
-If `--filename` is not provided, a new snapshot file is created with a timestamp. Default to automatic file naming, use `--filename=` when artifact is a part of the workflow result.
+```bash
+# default - save to a file with timestamp-based name
+npx @playwright/cli snapshot
+
+# save to file, use when snapshot is a part of the workflow result
+npx @playwright/cli snapshot --filename=after-click.yaml
+
+# snapshot an element instead of the whole page
+npx @playwright/cli snapshot "#main"
+
+# limit snapshot depth for efficiency, take a partial snapshot afterwards
+npx @playwright/cli snapshot --depth=4
+npx @playwright/cli snapshot e34
+```
 
 ## Targeting elements
 
@@ -208,17 +226,17 @@ npx @playwright/cli snapshot
 npx @playwright/cli click e15
 ```
 
-You can also use css or role selectors, for example when explicitly asked for it.
+You can also use css selectors or Playwright locators.
 
 ```bash
 # css selector
 npx @playwright/cli click "#main > button.submit"
 
-# role selector
-npx @playwright/cli click "role=button[name=Submit]"
+# role locator
+npx @playwright/cli click "getByRole('button', { name: 'Submit' })"
 
-# chaining css and role selectors
-npx @playwright/cli click "#footer >> role=button[name=Submit]"
+# test id
+npx @playwright/cli click "getByTestId('submit-button')"
 ```
 
 ## Browser Sessions
@@ -307,3 +325,4 @@ npx @playwright/cli close
 * **Test generation** [references/test-generation.md](references/test-generation.md)
 * **Tracing** [references/tracing.md](references/tracing.md)
 * **Video recording** [references/video-recording.md](references/video-recording.md)
+* **Inspecting element attributes** [references/element-attributes.md](references/element-attributes.md)
