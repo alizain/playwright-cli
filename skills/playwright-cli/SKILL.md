@@ -160,6 +160,21 @@ npx @playwright/cli video-chapter "Chapter Title" --description="Details" --dura
 npx @playwright/cli video-stop
 ```
 
+## Raw output
+
+The global `--raw` option strips page status, generated code, and snapshot sections from the output, returning only the result value. Use it to pipe command output into other tools. Commands that don't produce output return nothing.
+
+```bash
+npx @playwright/cli --raw eval "JSON.stringify(performance.timing)" | jq '.loadEventEnd - .navigationStart'
+npx @playwright/cli --raw eval "JSON.stringify([...document.querySelectorAll('a')].map(a => a.href))" > links.json
+npx @playwright/cli --raw snapshot > before.yml
+npx @playwright/cli click e5
+npx @playwright/cli --raw snapshot > after.yml
+diff before.yml after.yml
+TOKEN=$(npx @playwright/cli --raw cookie-get session_id)
+npx @playwright/cli --raw localstorage-get theme
+```
+
 ## Open parameters
 ```bash
 # Use specific browser when creating session
@@ -167,13 +182,14 @@ npx @playwright/cli open --browser=chrome
 npx @playwright/cli open --browser=firefox
 npx @playwright/cli open --browser=webkit
 npx @playwright/cli open --browser=msedge
-# Connect to browser via extension
-npx @playwright/cli open --extension
 
 # Use persistent profile (by default profile is in-memory)
 npx @playwright/cli open --persistent
 # Use persistent profile with custom directory
 npx @playwright/cli open --profile=/path/to/profile
+
+# Connect to browser via extension
+npx @playwright/cli attach --extension
 
 # Start with config file
 npx @playwright/cli open --config=my-config.json
