@@ -191,6 +191,13 @@ npx @playwright/cli open --profile=/path/to/profile
 # Connect to browser via extension
 npx @playwright/cli attach --extension
 
+# Connect to a running Chrome or Edge by channel name
+npx @playwright/cli attach --cdp=chrome
+npx @playwright/cli attach --cdp=msedge
+
+# Connect to a running browser via CDP endpoint
+npx @playwright/cli attach --cdp=http://localhost:9222
+
 # Start with config file
 npx @playwright/cli open --config=my-config.json
 
