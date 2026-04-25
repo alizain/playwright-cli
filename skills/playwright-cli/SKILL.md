@@ -38,6 +38,9 @@ npx @playwright/cli dblclick e7
 # --submit presses Enter after filling the element
 npx @playwright/cli fill e5 "user@example.com"  --submit
 npx @playwright/cli drag e2 e8
+# drop files or data onto an element (from outside the page)
+npx @playwright/cli drop e4 --path=./image.png
+npx @playwright/cli drop e4 --data="text/plain=hello world"
 npx @playwright/cli hover e4
 npx @playwright/cli select e9 "option-value"
 npx @playwright/cli upload ./document.pdf
@@ -158,6 +161,19 @@ npx @playwright/cli tracing-stop
 npx @playwright/cli video-start video.webm
 npx @playwright/cli video-chapter "Chapter Title" --description="Details" --duration=2000
 npx @playwright/cli video-stop
+
+# launch the dashboard with annotation prompt to ask the user for input
+npx @playwright/cli show --annotate
+
+# generate a Playwright locator for an element from its ref or selector
+npx @playwright/cli generate-locator e5 --raw
+
+# show a persistent highlight overlay for an element, optionally with a custom style
+npx @playwright/cli highlight e5
+npx @playwright/cli highlight e5 --style="outline: 3px dashed red"
+# hide a single element highlight, or all page highlights when no target is given
+npx @playwright/cli highlight e5 --hide
+npx @playwright/cli highlight --hide
 ```
 
 ## Raw output
@@ -175,6 +191,11 @@ TOKEN=$(npx @playwright/cli --raw cookie-get session_id)
 npx @playwright/cli --raw localstorage-get theme
 ```
 
+For structured output wrapping every reply as JSON, pass --json
+```bash
+npx @playwright/cli list --json
+```
+
 ## Open parameters
 ```bash
 # Use specific browser when creating session
@@ -188,8 +209,8 @@ npx @playwright/cli open --persistent
 # Use persistent profile with custom directory
 npx @playwright/cli open --profile=/path/to/profile
 
-# Connect to browser via extension
-npx @playwright/cli attach --extension
+# Connect to browser via Playwright Extension
+npx @playwright/cli attach --extension=chrome
 
 # Connect to a running Chrome or Edge by channel name
 npx @playwright/cli attach --cdp=chrome
@@ -203,6 +224,8 @@ npx @playwright/cli open --config=my-config.json
 
 # Close the browser
 npx @playwright/cli close
+# Detach from an attached browser (leaves the external browser running)
+npx @playwright/cli -s=msedge detach
 # Delete user data for the default session
 npx @playwright/cli delete-data
 ```
@@ -235,6 +258,9 @@ npx @playwright/cli snapshot "#main"
 # limit snapshot depth for efficiency, take a partial snapshot afterwards
 npx @playwright/cli snapshot --depth=4
 npx @playwright/cli snapshot e34
+
+# include each element's bounding box as [box=x,y,width,height]
+npx @playwright/cli snapshot --boxes
 ```
 
 ## Targeting elements
@@ -336,6 +362,15 @@ npx @playwright/cli click e4
 npx @playwright/cli fill e7 "test"
 npx @playwright/cli tracing-stop
 npx @playwright/cli close
+```
+
+## Example: Interactive session
+
+Ask the user to annotate the UI. User can provide contextual tasks or ask contextual questions using annotations:
+
+```bash
+npx @playwright/cli open https://example.com
+npx @playwright/cli show --annotate
 ```
 
 ## Specific tasks
