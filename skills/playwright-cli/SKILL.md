@@ -153,7 +153,8 @@ npx @playwright/cli unroute
 ```bash
 npx @playwright/cli console
 npx @playwright/cli console warning
-npx @playwright/cli network
+npx @playwright/cli requests
+npx @playwright/cli request 5
 npx @playwright/cli run-code "async page => await page.context().grantPermissions(['geolocation'])"
 npx @playwright/cli run-code --filename=script.js
 npx @playwright/cli tracing-start
@@ -351,7 +352,7 @@ npx @playwright/cli open https://example.com
 npx @playwright/cli click e4
 npx @playwright/cli fill e7 "test"
 npx @playwright/cli console
-npx @playwright/cli network
+npx @playwright/cli requests
 npx @playwright/cli close
 ```
 
@@ -379,6 +380,7 @@ npx @playwright/cli show --annotate
 * **Request mocking** [references/request-mocking.md](references/request-mocking.md)
 * **Running Playwright code** [references/running-code.md](references/running-code.md)
 * **Browser session management** [references/session-management.md](references/session-management.md)
+* **Spec-driven testing (plan / generate / heal)** [references/spec-driven-testing.md](references/spec-driven-testing.md)
 * **Storage state (cookies, localStorage)** [references/storage-state.md](references/storage-state.md)
 * **Test generation** [references/test-generation.md](references/test-generation.md)
 * **Tracing** [references/tracing.md](references/tracing.md)
