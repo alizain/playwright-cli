@@ -163,6 +163,10 @@ npx @playwright/cli video-start video.webm
 npx @playwright/cli video-chapter "Chapter Title" --description="Details" --duration=2000
 npx @playwright/cli video-stop
 
+# annotate each subsequent action (click, type, ...) with a callout naming the action and highlighting the target
+npx @playwright/cli video-show-actions --duration=600 --position=top-right
+npx @playwright/cli video-hide-actions
+
 # launch the dashboard for UI review / design feedback — user annotates the page, you receive the annotated screenshot, snapshot, and notes
 npx @playwright/cli show --annotate
 
@@ -229,6 +233,18 @@ npx @playwright/cli close
 npx @playwright/cli -s=msedge detach
 # Delete user data for the default session
 npx @playwright/cli delete-data
+```
+
+## URLs with `&` on Windows
+
+On Windows, `cmd.exe` and PowerShell treat `&` as a command separator, so URLs with multiple query parameters get truncated before `npx @playwright/cli` runs. Escape `&` with `^&` in `cmd.exe`, or use `--%` in PowerShell:
+
+```batch
+npx @playwright/cli goto "https://example.com/?a=1^&b=2"
+```
+
+```powershell
+npx @playwright/cli --% goto "https://example.com/?a=1&b=2"
 ```
 
 ## Snapshots
