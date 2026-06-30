@@ -93,6 +93,7 @@ npx @playwright/cli mousewheel 0 100
 npx @playwright/cli screenshot
 npx @playwright/cli screenshot e5
 npx @playwright/cli screenshot --filename=page.png
+npx @playwright/cli screenshot --hires
 npx @playwright/cli pdf --filename=page.pdf
 ```
 
