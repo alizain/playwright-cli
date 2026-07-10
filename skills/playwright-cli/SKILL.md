@@ -47,6 +47,11 @@ npx @playwright/cli upload ./document.pdf
 npx @playwright/cli check e12
 npx @playwright/cli uncheck e12
 npx @playwright/cli snapshot
+# search the snapshot for text or a regexp, returns matching nodes with surrounding context
+npx @playwright/cli find "Sign in"
+npx @playwright/cli find --regex "Sign (in|up)"
+# wrap the regexp in slashes to add flags, e.g. /i for case-insensitive
+npx @playwright/cli find --regex "/sign (in|up)/i"
 npx @playwright/cli eval "document.title"
 npx @playwright/cli eval "el => el.textContent" e5
 # get element id, class, or any attribute not visible in the snapshot
@@ -210,6 +215,12 @@ npx @playwright/cli open --browser=firefox
 npx @playwright/cli open --browser=webkit
 npx @playwright/cli open --browser=msedge
 
+# Emulate a generic mobile device (Pixel 10 for Chromium, iPhone 17 for WebKit).
+# Prefer this when a mobile layout is acceptable: mobile pages are usually
+# lighter, so snapshots are smaller and cheaper.
+npx @playwright/cli open --mobile
+npx @playwright/cli open --device="iPhone 15"
+
 # Use persistent profile (by default profile is in-memory)
 npx @playwright/cli open --persistent
 # Use persistent profile with custom directory
@@ -279,6 +290,11 @@ npx @playwright/cli snapshot e34
 
 # include each element's bounding box as [box=x,y,width,height]
 npx @playwright/cli snapshot --boxes
+
+# search a large snapshot instead of capturing it all — returns matching nodes
+# with 3 lines of context around each match (like grep -C)
+npx @playwright/cli find "Add to cart"
+npx @playwright/cli find --regex "\\$[0-9]+\\.[0-9]{2}"
 ```
 
 ## Targeting elements
@@ -326,13 +342,13 @@ npx @playwright/cli kill-all
 
 ## Installation
 
-If global `npx @playwright/cli` command is not available, try a local version via `npx @playwright/cli`:
+If global `npx @playwright/cli` command is not available, try a local version via `npx playwright cli`:
 
 ```bash
-npx --no-install npx @playwright/cli --version
+npx --no-install playwright --version
 ```
 
-When local version is available, use `npx @playwright/cli` in all commands. Otherwise, install `npx @playwright/cli` as a global command:
+When local version is available, use `npx playwright cli` in all commands. Otherwise, install `npx @playwright/cli` as a global command:
 
 ```bash
 npm install -g @playwright/cli@latest
@@ -397,9 +413,8 @@ npx @playwright/cli show --annotate
 * **Request mocking** [references/request-mocking.md](references/request-mocking.md)
 * **Running Playwright code** [references/running-code.md](references/running-code.md)
 * **Browser session management** [references/session-management.md](references/session-management.md)
-* **Spec-driven testing (plan / generate / heal)** [references/spec-driven-testing.md](references/spec-driven-testing.md)
 * **Storage state (cookies, localStorage)** [references/storage-state.md](references/storage-state.md)
-* **Test generation** [references/test-generation.md](references/test-generation.md)
+* **Test generation (plan / generate / heal)** [references/test-generation.md](references/test-generation.md)
 * **Tracing** [references/tracing.md](references/tracing.md)
 * **Video recording** [references/video-recording.md](references/video-recording.md)
 * **Inspecting element attributes** [references/element-attributes.md](references/element-attributes.md)
