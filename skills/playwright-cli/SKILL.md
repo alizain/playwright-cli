@@ -165,6 +165,11 @@ npx @playwright/cli run-code "async page => await page.context().grantPermission
 npx @playwright/cli run-code --filename=script.js
 npx @playwright/cli tracing-start
 npx @playwright/cli tracing-stop
+
+# record user actions in the browser, print them as Playwright code on stop
+npx @playwright/cli recording-start
+npx @playwright/cli recording-stop
+
 npx @playwright/cli video-start video.webm
 npx @playwright/cli video-chapter "Chapter Title" --description="Details" --duration=2000
 npx @playwright/cli video-stop
