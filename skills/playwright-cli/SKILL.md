@@ -1,7 +1,7 @@
 ---
 name: playwright-cli
 description: Automate browser interactions, test web pages and work with Playwright tests.
-allowed-tools: Bash(npx @playwright/cli:*) Bash(npx:*) Bash(npm:*)
+allowed-tools: Bash(npx @playwright/cli:*) Bash(npx playwright:*) Bash(npx --no-install playwright:*)
 ---
 
 # Browser Automation with npx @playwright/cli
@@ -52,6 +52,8 @@ npx @playwright/cli find "Sign in"
 npx @playwright/cli find --regex "Sign (in|up)"
 # wrap the regexp in slashes to add flags, e.g. /i for case-insensitive
 npx @playwright/cli find --regex "/sign (in|up)/i"
+# save results to a file when a query produces too many matches
+npx @playwright/cli find "Add" --filename=results.md
 npx @playwright/cli eval "document.title"
 npx @playwright/cli eval "el => el.textContent" e5
 # get element id, class, or any attribute not visible in the snapshot
@@ -210,7 +212,8 @@ npx @playwright/cli highlight --hide
 ### WebMCP
 
 Some pages register their own tools for agents through the experimental WebMCP API. When a page
-has them, the page status says so, and the snapshot lists them at the top:
+has them, the page status says so, and the snapshot lists them at the top. Run `webmcp-list` to
+get the same list and schemas without taking a snapshot:
 
 ```
 - Page URL: https://example.com/
@@ -227,7 +230,7 @@ has them, the page status says so, and the snapshot lists them at the top:
 Prefer these tools over driving the UI when one matches the task: the page implements them, so a
 single call replaces a sequence of clicks and fills — and it cannot be blocked by a cookie banner or
 a newsletter modal.
-Run `webmcp-call <name> --params '{...}'` to call the tool. Run `webmcp-list` to only list the tools and schemas.
+Run `webmcp-call <name> --params '{...}'` to call the tool.
 
 ```bash
 npx @playwright/cli webmcp-call search --params '{"query":"cats"}'
@@ -393,6 +396,8 @@ npx @playwright/cli kill-all
 ```
 
 ## Installation
+
+Package installation and custom `npm` scripts may require separate approval.
 
 If global `npx @playwright/cli` command is not available, try a local version via `npx playwright cli`:
 
