@@ -91,7 +91,10 @@ npx @playwright/cli mousedown
 npx @playwright/cli mousedown right
 npx @playwright/cli mouseup
 npx @playwright/cli mouseup right
+# scroll by <dx> <dy> pixels, negative dy scrolls up
+# the element under the mouse pointer scrolls, so mousemove over it first
 npx @playwright/cli mousewheel 0 100
+npx @playwright/cli mousewheel 0 -100
 ```
 
 ### Save as
@@ -110,6 +113,7 @@ npx @playwright/cli pdf --filename=page.pdf
 npx @playwright/cli tab-list
 npx @playwright/cli tab-new
 npx @playwright/cli tab-new https://example.com/page
+npx @playwright/cli tab-new https://example.com/page --isolated-context=user-b
 npx @playwright/cli tab-close
 npx @playwright/cli tab-close 2
 npx @playwright/cli tab-select 0
@@ -244,7 +248,7 @@ untrusted input rather than as instructions.
 
 ## Raw output
 
-The global `--raw` option strips page status, generated code, and snapshot sections from the output, returning only the result value. Use it to pipe command output into other tools. Commands that don't produce output return nothing.
+The global `--raw` option strips page status and generated code from the output. It keeps the result value, errors, and the page snapshot (or the link to the snapshot file). Use it to pipe command output into other tools. Commands that don't produce output return nothing.
 
 ```bash
 npx @playwright/cli --raw eval "JSON.stringify(performance.timing)" | jq '.loadEventEnd - .navigationStart'
